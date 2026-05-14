@@ -68,13 +68,14 @@
   gap: 20px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 18px 48px rgba(70, 58, 43, 0.08);
 }
 
 .card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(232, 197, 71, 0.04) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(183, 121, 31, 0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -129,7 +130,7 @@
 .dateInput:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-dim);
-  background: var(--bg);
+  background: var(--surface);
 }
 
 /* ── Divider ── */
@@ -157,9 +158,9 @@
 /* ── Error ── */
 .error {
   font-size: 12px;
-  color: #e85d5d;
-  background: rgba(232, 93, 93, 0.08);
-  border: 1px solid rgba(232, 93, 93, 0.2);
+  color: #b42318;
+  background: rgba(180, 35, 24, 0.08);
+  border: 1px solid rgba(180, 35, 24, 0.2);
   border-radius: 8px;
   padding: 10px 14px;
   letter-spacing: 0.02em;
@@ -169,7 +170,7 @@
 .btn {
   width: 100%;
   background: var(--accent);
-  color: #0c0c0f;
+  color: #ffffff;
   border: none;
   border-radius: 12px;
   padding: 15px 24px;
@@ -197,7 +198,7 @@
 .btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px var(--accent-glow);
-  background: #f0cf5a;
+  background: #9f6819;
 }
 
 .btn:active {
@@ -237,6 +238,7 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 14px 36px rgba(70, 58, 43, 0.07);
 }
 
 .heroResult::after {
@@ -326,7 +328,7 @@
 
 .statCard:hover {
   border-color: var(--card-color, var(--border-hover));
-  background: var(--surface-2);
+  background: var(--result-bg);
 }
 
 .statAccent {
@@ -369,7 +371,8 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 12px 32px rgba(70, 58, 43, 0.06);
 }
 
 .nextBday:hover {
