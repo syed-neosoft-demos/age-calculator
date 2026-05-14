@@ -1,0 +1,435 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 20px 80px;
+}
+
+.container {
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  padding: 12px 0 4px;
+}
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  margin-bottom: 16px;
+  opacity: 0.85;
+}
+
+.title {
+  font-family: 'DM Serif Display', serif;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+
+.titleLine1 {
+  display: block;
+  font-size: clamp(52px, 12vw, 80px);
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+.titleLine2 {
+  display: block;
+  font-size: clamp(52px, 12vw, 80px);
+  color: var(--accent);
+}
+
+.subtitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(232, 197, 71, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Inputs ── */
+.inputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.inputGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--text-secondary);
+}
+
+.labelDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dateInput {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.dateInput:hover {
+  border-color: var(--border-hover);
+}
+
+.dateInput:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+  background: var(--bg);
+}
+
+/* ── Divider ── */
+.divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.dividerLine {
+  width: 1px;
+  height: 10px;
+  background: var(--border);
+}
+
+.dividerIcon {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+/* ── Error ── */
+.error {
+  font-size: 12px;
+  color: #e85d5d;
+  background: rgba(232, 93, 93, 0.08);
+  border: 1px solid rgba(232, 93, 93, 0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  letter-spacing: 0.02em;
+}
+
+/* ── Button ── */
+.btn {
+  width: 100%;
+  background: var(--accent);
+  color: #0c0c0f;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 24px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--accent-glow);
+  background: #f0cf5a;
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btnText {
+  letter-spacing: 0.12em;
+}
+
+.btnArrow {
+  font-size: 16px;
+}
+
+/* ── Results ── */
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.resultsVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Hero Result ── */
+.heroResult {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 28px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroResult::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.heroNumbers {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.heroItem {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.heroNum {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(44px, 11vw, 64px);
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.heroUnit {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.heroDot {
+  font-size: 32px;
+  color: var(--border-hover);
+  line-height: 1;
+  align-self: center;
+  margin: 0 4px;
+}
+
+.heroSubtext {
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.heroSubtext strong {
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* ── Stat Card ── */
+.statCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 14px 14px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease var(--delay, 0s), transform 0.35s ease var(--delay, 0s), border-color 0.2s, background 0.2s;
+}
+
+.statCardVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.statCard:hover {
+  border-color: var(--card-color, var(--border-hover));
+  background: var(--surface-2);
+}
+
+.statAccent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--card-color, var(--accent));
+  opacity: 0.6;
+}
+
+.statCard:hover .statAccent {
+  opacity: 1;
+}
+
+.statValue {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(18px, 3.5vw, 24px);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin-bottom: 5px;
+}
+
+.statLabel {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* ── Next Birthday ── */
+.nextBday {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.2s;
+}
+
+.nextBday:hover {
+  border-color: var(--border-hover);
+}
+
+.nextBdayIcon {
+  font-size: 28px;
+  flex-shrink: 0;
+  filter: grayscale(0.2);
+}
+
+.nextBdayLabel {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.nextBdayDate {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.nextBdayDays {
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: 3px;
+  letter-spacing: 0.04em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 420px) {
+  .inputs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .divider {
+    flex-direction: row;
+    padding-bottom: 0;
+  }
+  .dividerLine {
+    width: 40px;
+    height: 1px;
+  }
+  .dividerIcon {
+    transform: rotate(90deg);
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .heroNumbers {
+    gap: 4px;
+  }
+  .heroDot {
+    font-size: 24px;
+  }
+}
