@@ -1,11 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styles from './page.module.css'
-
-function pad(n) {
-  return String(n).padStart(2, '0')
-}
 
 function calculateAge(birthDate, toDate) {
   const birth = new Date(birthDate)
@@ -102,12 +98,12 @@ export default function Home() {
       <div className={styles.container}>
         {/* Header */}
         <header className={styles.header}>
-          <div className={styles.eyebrow}>TEMPORAL CALCULATOR</div>
+          <div className={styles.eyebrow}>FREE ONLINE TOOL</div>
           <h1 className={styles.title}>
-            <span className={styles.titleLine1}>How old</span>
-            <span className={styles.titleLine2}>are you?</span>
+            <span className={styles.titleLine1}>Age</span>
+            <span className={styles.titleLine2}>Calculator</span>
           </h1>
-          <p className={styles.subtitle}>Exact age down to the last second</p>
+          <p className={styles.subtitle}>Calculate exact age from date of birth</p>
         </header>
 
         {/* Input Card */}
