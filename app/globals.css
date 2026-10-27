@@ -6,12 +6,12 @@
   --surface-2: #f1ece3;
   --border: #ded5c6;
   --border-hover: #b9aa95;
-  --accent: #b7791f;
+  --accent: #956019;
   --accent-dim: rgba(183, 121, 31, 0.12);
   --accent-glow: rgba(183, 121, 31, 0.22);
   --text-primary: #24211d;
   --text-secondary: #766d61;
-  --text-muted: #9a8f80;
+  --text-muted: #766d61;
   --result-bg: #fbf8f2;
   --green: #26845a;
   --blue: #2f73a8;
@@ -30,7 +30,6 @@ html, body {
   color: var(--text-primary);
   font-family: 'DM Mono', monospace;
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
 body {

@@ -89,8 +89,13 @@ export default function Home() {
     setTimeout(() => setAnimated(true), 50)
   }
 
-  function handleKeyDown(e) {
-    if (e.key === 'Enter') handleCalculate()
+  function openDatePicker(e) {
+    // Keep native editing available in browsers that cannot open the picker.
+    try {
+      e.currentTarget.showPicker?.()
+    } catch {
+      e.currentTarget.focus()
+    }
   }
 
   return (
@@ -103,141 +108,162 @@ export default function Home() {
             <span className={styles.titleLine1}>Age</span>
             <span className={styles.titleLine2}>Calculator</span>
           </h1>
-          <p className={styles.subtitle}>Calculate exact age from date of birth</p>
+          <p className={styles.subtitle}>Every year, month, and day. Find your exact age and count down to your next birthday.</p>
         </header>
 
-        {/* Input Card */}
-        <div className={styles.card}>
-          <div className={styles.inputs}>
-            <div className={styles.inputGroup}>
-              <label className={styles.label}>
-                <span className={styles.labelDot} style={{ background: 'var(--accent)' }} />
-                DATE OF BIRTH
-              </label>
-              <input
-                type="date"
-                className={styles.dateInput}
-                value={birthDate}
-                max={today}
-                onChange={e => setBirthDate(e.target.value)}
-                onKeyDown={handleKeyDown}
-              />
+        <div className={styles.workspace}>
+          {/* Input Card */}
+          <form className={styles.card} noValidate onSubmit={e => { e.preventDefault(); handleCalculate() }}>
+            <div className={styles.cardHeading}>
+              <span className={styles.sectionNumber}>01 / YOUR DATES</span>
+              <h2>Start with a date</h2>
+              <p>Choose your birthday and the date you want to calculate to.</p>
+            </div>
+            <div className={styles.inputs}>
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="birth-date">
+                  <span className={styles.labelDot} style={{ background: 'var(--accent)' }} />
+                  DATE OF BIRTH
+                </label>
+                <input
+                  id="birth-date"
+                  type="date"
+                  className={styles.dateInput}
+                  value={birthDate}
+                  max={today}
+                  onChange={e => setBirthDate(e.target.value)}
+                  onClick={openDatePicker}
+                  aria-describedby="birth-date-hint"
+                />
+                <p id="birth-date-hint" className={styles.inputHint}>Tap to choose your birth date</p>
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="target-date">
+                  <span className={styles.labelDot} style={{ background: 'var(--blue)' }} />
+                  CALCULATE TO
+                </label>
+                <input
+                  id="target-date"
+                  type="date"
+                  className={styles.dateInput}
+                  value={toDate}
+                  onChange={e => setToDate(e.target.value)}
+                  onClick={openDatePicker}
+                  aria-describedby="target-date-hint"
+                />
+                <div className={styles.inputMeta}>
+                  <p id="target-date-hint" className={styles.inputHint}>Choose any target date</p>
+                  <button type="button" className={styles.todayBtn} onClick={() => setToDate(today)}>Use today</button>
+                </div>
+              </div>
             </div>
 
-            <div className={styles.divider}>
-              <div className={styles.dividerLine} />
-              <span className={styles.dividerIcon}>→</span>
-              <div className={styles.dividerLine} />
-            </div>
+            {error && <p className={styles.error} role="alert">{error}</p>}
 
-            <div className={styles.inputGroup}>
-              <label className={styles.label}>
-                <span className={styles.labelDot} style={{ background: 'var(--blue)' }} />
-                CALCULATE TO
-              </label>
-              <input
-                type="date"
-                className={styles.dateInput}
-                value={toDate}
-                onChange={e => setToDate(e.target.value)}
-                onKeyDown={handleKeyDown}
-              />
-            </div>
-          </div>
+            <button type="submit" className={styles.btn}>
+              <span className={styles.btnText}>Calculate Age</span>
+              <span className={styles.btnArrow}>↗</span>
+            </button>
+            <p className={styles.cardNote}>A little perspective on your time.</p>
+          </form>
 
-          {error && <p className={styles.error}>{error}</p>}
+          {/* Results */}
+          {result ? (
+            <section aria-label="Age calculation results" aria-live="polite" className={`${styles.results} ${animated ? styles.resultsVisible : ''}`}>
 
-          <button className={styles.btn} onClick={handleCalculate}>
-            <span className={styles.btnText}>Calculate Age</span>
-            <span className={styles.btnArrow}>↗</span>
-          </button>
+              {/* Hero result */}
+              <div className={styles.heroResult}>
+                <h2 className={styles.sectionNumber}>02 / YOUR AGE</h2>
+                <div className={styles.heroNumbers}>
+                  <div className={styles.heroItem}>
+                    <span className={styles.heroNum}>{result.years}</span>
+                    <span className={styles.heroUnit}>years</span>
+                  </div>
+                  <div className={styles.heroItem}>
+                    <span className={styles.heroNum}>{result.months}</span>
+                    <span className={styles.heroUnit}>months</span>
+                  </div>
+                  <div className={styles.heroItem}>
+                    <span className={styles.heroNum}>{result.days}</span>
+                    <span className={styles.heroUnit}>days</span>
+                  </div>
+                </div>
+                <p className={styles.heroSubtext}>
+                  Born on a <strong>{result.bornOnDay}</strong>
+                </p>
+              </div>
+
+              {/* Grid stats */}
+              <div className={styles.grid}>
+                <StatCard
+                  value={result.totalMonths.toLocaleString()}
+                  label="Total Months"
+                  color="var(--green)"
+                  delay="0.05s"
+                  animated={animated}
+                />
+                <StatCard
+                  value={result.totalWeeks.toLocaleString()}
+                  label="Total Weeks"
+                  color="var(--blue)"
+                  delay="0.1s"
+                  animated={animated}
+                />
+                <StatCard
+                  value={result.totalDays.toLocaleString()}
+                  label="Total Days"
+                  color="var(--accent)"
+                  delay="0.15s"
+                  animated={animated}
+                />
+                <StatCard
+                  value={result.totalHours.toLocaleString()}
+                  label="Total Hours"
+                  color="var(--pink)"
+                  delay="0.2s"
+                  animated={animated}
+                />
+                <StatCard
+                  value={result.totalMinutes.toLocaleString()}
+                  label="Total Minutes"
+                  color="var(--purple)"
+                  delay="0.25s"
+                  animated={animated}
+                />
+                <StatCard
+                  value={result.totalSeconds.toLocaleString()}
+                  label="Total Seconds"
+                  color="var(--green)"
+                  delay="0.3s"
+                  animated={animated}
+                />
+              </div>
+
+              {/* Next birthday */}
+              <div className={styles.nextBday}>
+                <div className={styles.nextBdayIcon}>🎂</div>
+                <div>
+                  <div className={styles.nextBdayLabel}>NEXT BIRTHDAY</div>
+                  <div className={styles.nextBdayDate}>{result.nextBirthdayDate}</div>
+                  <div className={styles.nextBdayDays}>{result.daysToNext} days away</div>
+                </div>
+              </div>
+
+            </section>
+          ) : (
+            <section className={styles.emptyState} aria-label="Your age results">
+              <span className={styles.sectionNumber}>02 / YOUR AGE</span>
+              <div className={styles.emptyIllustration} aria-hidden="true">
+                <span>Y<span>years</span></span><i>·</i><span>M<span>months</span></span><i>·</i><span>D<span>days</span></span>
+              </div>
+              <h2>Your story, in numbers.</h2>
+              <p>Enter your dates and calculate to see your age, time lived, and next birthday.</p>
+              <div className={styles.emptyTags}><span>Exact age</span><span>Time lived</span><span>Next birthday</span></div>
+            </section>
+          )}
         </div>
-
-        {/* Results */}
-        {result && (
-          <div className={`${styles.results} ${animated ? styles.resultsVisible : ''}`}>
-
-            {/* Hero result */}
-            <div className={styles.heroResult}>
-              <div className={styles.heroNumbers}>
-                <div className={styles.heroItem}>
-                  <span className={styles.heroNum}>{result.years}</span>
-                  <span className={styles.heroUnit}>yrs</span>
-                </div>
-                <div className={styles.heroDot}>·</div>
-                <div className={styles.heroItem}>
-                  <span className={styles.heroNum}>{result.months}</span>
-                  <span className={styles.heroUnit}>mo</span>
-                </div>
-                <div className={styles.heroDot}>·</div>
-                <div className={styles.heroItem}>
-                  <span className={styles.heroNum}>{result.days}</span>
-                  <span className={styles.heroUnit}>days</span>
-                </div>
-              </div>
-              <p className={styles.heroSubtext}>
-                Born on a <strong>{result.bornOnDay}</strong>
-              </p>
-            </div>
-
-            {/* Grid stats */}
-            <div className={styles.grid}>
-              <StatCard
-                value={result.totalMonths.toLocaleString()}
-                label="Total Months"
-                color="var(--green)"
-                delay="0.05s"
-                animated={animated}
-              />
-              <StatCard
-                value={result.totalWeeks.toLocaleString()}
-                label="Total Weeks"
-                color="var(--blue)"
-                delay="0.1s"
-                animated={animated}
-              />
-              <StatCard
-                value={result.totalDays.toLocaleString()}
-                label="Total Days"
-                color="var(--accent)"
-                delay="0.15s"
-                animated={animated}
-              />
-              <StatCard
-                value={result.totalHours.toLocaleString()}
-                label="Total Hours"
-                color="var(--pink)"
-                delay="0.2s"
-                animated={animated}
-              />
-              <StatCard
-                value={result.totalMinutes.toLocaleString()}
-                label="Total Minutes"
-                color="var(--purple)"
-                delay="0.25s"
-                animated={animated}
-              />
-              <StatCard
-                value={result.totalSeconds.toLocaleString()}
-                label="Total Seconds"
-                color="var(--green)"
-                delay="0.3s"
-                animated={animated}
-              />
-            </div>
-
-            {/* Next birthday */}
-            <div className={styles.nextBday}>
-              <div className={styles.nextBdayIcon}>🎂</div>
-              <div>
-                <div className={styles.nextBdayLabel}>NEXT BIRTHDAY</div>
-                <div className={styles.nextBdayDate}>{result.nextBirthdayDate}</div>
-                <div className={styles.nextBdayDays}>{result.daysToNext} days away</div>
-              </div>
-            </div>
-
-          </div>
-        )}
+        <footer className={styles.footer}>Made for the moments that count.</footer>
       </div>
     </main>
   )
